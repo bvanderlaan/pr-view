@@ -26,10 +26,10 @@ export class AddRemoteHostComponent {
   }
 
   addRemoteHost() {
-    const addRemoteHostOperation: Observable<RemoteHost> = this.addRemoteHostService.add(this.remoteHost);
-    addRemoteHostOperation.subscribe((remoteHost) => {
+    const addRemoteHostOperation: Observable<number> = this.addRemoteHostService.add(this.remoteHost);
+    addRemoteHostOperation.subscribe(() => {
       this.clearError();
-      this.router.navigate(['/']);
+      this.router.navigate(['/remote']);
     }, (err) => { this.error = `Sorry, failed to add the remote host: ${err}` });
   }
 }

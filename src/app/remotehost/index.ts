@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AddRemoteHostComponent } from './addremotehost/addremotehost.component'
+import { RemoteHostListComponent } from './remotehostlist/remotehostlist.component'
+import { RemoteHostCardComponent } from './remotehostcard/remotehostcard.component';
 
 @NgModule({
   imports: [
@@ -13,9 +15,12 @@ import { AddRemoteHostComponent } from './addremotehost/addremotehost.component'
   ],
   declarations: [
     AddRemoteHostComponent,
+    RemoteHostListComponent,
+    RemoteHostCardComponent,
   ],
   exports: [
-    AddRemoteHostComponent
+    AddRemoteHostComponent,
+    RemoteHostListComponent
   ]
 })
 
@@ -24,5 +29,9 @@ export const remoteHostRoutes = [
   {
     path: 'remote/add',
     component: AddRemoteHostComponent,
+  },
+  {
+    path: 'remote',
+    component: RemoteHostListComponent,
   },
 ];
