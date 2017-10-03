@@ -1,0 +1,29 @@
+.nav-entry > a,
+.nav-entry > p {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 10px 5px 10px 5px;
+}
+
+.nav-entry > a.btn:hover,
+.nav-entry > a.btn:focus {
+  background-color: #286090;
+}
+
+.nav-entry > a:hover,
+.nav-entry > a:focus {
+  background-color: #E1EDF7;
+}
+
+#site-title > a {
+  color: #000000;
+}
+
+#site-title > a:hover {
+  text-decoration: none;
+}
+
+#header {
+  border-bottom: 2px solid #DADADA;
+  background-color: #FAFAFB;
+}
