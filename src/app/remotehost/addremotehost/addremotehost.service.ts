@@ -21,6 +21,7 @@ export class AddRemoteHostService {
 
     remoteHosts[remoteHost.name] = remoteHost;
     remoteHosts[remoteHost.name].id = UUID.UUID();
+    remoteHosts[remoteHost.name].created_at = new Date();
     localStorage.setItem(this.remoteHostKey, JSON.stringify(remoteHosts));
 
     return Observable.of(42);
