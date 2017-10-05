@@ -4,5 +4,6 @@ export class RemoteHost {
               public url: string,
               public username: string,
               public token: string,
-              public created_at: Date) {}
+              public created_at: Date,
+              public modified_at: Date) {}
 }

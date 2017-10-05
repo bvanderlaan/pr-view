@@ -4,9 +4,9 @@
       <strong>Error:</strong> {{error}}.
     </div>
     <div class="center-block">
-      <form #f="ngForm" (ngSubmit)="addRemoteHost()" novalidate>
+      <form #f="ngForm" (ngSubmit)="submit()" novalidate>
         <fieldset>
-          <div class="form-group form-inline" [ngClass]="{'has-error': hostName.errors && (hostName.dirty || hostName.touched)}">
+          <div [hidden]="isEdit" class="form-group form-inline" [ngClass]="{'has-error': hostName.errors && (hostName.dirty || hostName.touched)}">
             <label>Host Name</label>
             <input name="hostName" type="text" class="form-control" placeholder="Give me a unique name to call your remote host"
               [(ngModel)]="remoteHost.name" #hostName="ngModel"
@@ -15,6 +15,13 @@
             <div *ngIf="hostName.errors && (hostName.dirty || hostName.touched)" class="alert alert-danger fade in">
                 I need a unique name for your remote host
             </div>
+          </div>
+
+          <div [hidden]="!isEdit" class="form-group form-inline" [ngClass]="{'has-error': hostName.errors && (hostName.dirty || hostName.touched)}">
+            <label>Host Name</label>
+            <input name="hostName" type="text" class="form-control" placeholder="Give me a unique name to call your remote host"
+              [(ngModel)]="remoteHost.name" #hostName="ngModel"
+              readonly />
           </div>
 
           <div class="form-group form-inline" [ngClass]="{'has-error': hostUrl.errors && (hostUrl.dirty || hostUrl.touched)}">
@@ -50,7 +57,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Save and Login</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Save</button>
         </fieldset>
       </form>
     </div>

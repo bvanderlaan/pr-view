@@ -31,6 +31,10 @@ export const remoteHostRoutes = [
     component: AddRemoteHostComponent,
   },
   {
+    path: 'remote/:id',
+    component: AddRemoteHostComponent,
+  },
+  {
     path: 'remote',
     component: RemoteHostListComponent,
   },
