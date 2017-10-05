@@ -17,4 +17,15 @@ export class RemoteHostListService {
 
     return Observable.of(remoteHostList);
   }
+
+  delete(name) {
+    const remoteHosts = JSON.parse(localStorage.getItem(this.remoteHostKey)) || {};
+
+    if (remoteHosts.hasOwnProperty(name)) {
+      delete remoteHosts[name];
+      localStorage.setItem(this.remoteHostKey, JSON.stringify(remoteHosts));
+    }
+
+    return Observable.of(42);
+  }
 }

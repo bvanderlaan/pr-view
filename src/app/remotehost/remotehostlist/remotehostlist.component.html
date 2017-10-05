@@ -1,3 +1,6 @@
 <div *ngFor="let remote of remoteHosts">
-  <remote-host-card [remote]=remote></remote-host-card>
+  <remote-host-card
+    [remote]=remote
+    (onDelete)="delete($event)"
+  ></remote-host-card>
 </div>
