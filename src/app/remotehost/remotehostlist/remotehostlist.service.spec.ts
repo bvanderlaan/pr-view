@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { RemotehostlistService } from './remotehostlist.service';
+import { RemoteHostListService } from './remotehostlist.service';
 
-describe('RemotehostlistService', () => {
+describe('RemoteHostListService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RemotehostlistService]
+      providers: [RemoteHostListService]
     });
   });
 
-  it('should be created', inject([RemotehostlistService], (service: RemotehostlistService) => {
+  it('should be created', inject([RemoteHostListService], (service: RemoteHostListService) => {
     expect(service).toBeTruthy();
   }));
 });
