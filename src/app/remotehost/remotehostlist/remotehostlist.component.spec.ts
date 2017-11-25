@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 
 import { RemoteHostListComponent } from './remotehostlist.component';
+import { RemoteHostCardComponent } from '../remotehostcard/remotehostcard.component';
+import { RemoteHostListService } from './remotehostlist.service';
 
 describe('RemoteHostListComponent', () => {
   let component: RemoteHostListComponent;
@@ -8,7 +12,9 @@ describe('RemoteHostListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RemoteHostListComponent ]
+      imports: [ RouterTestingModule ],
+      declarations: [ RemoteHostListComponent, RemoteHostCardComponent ],
+      providers: [ RemoteHostListService ]
     })
     .compileComponents();
   }));

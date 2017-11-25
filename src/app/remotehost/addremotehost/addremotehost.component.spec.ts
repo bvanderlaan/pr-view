@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { AddRemoteHostComponent } from './addremotehost.component';
 
@@ -8,7 +10,8 @@ describe('AddRemoteHostComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddRemoteHostComponent ]
+      declarations: [ AddRemoteHostComponent ],
+      imports: [ FormsModule, RouterTestingModule, ]
     })
     .compileComponents();
   }));
