@@ -1,24 +1,28 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { LayoutModule } from './layout';
 import { RemoteHostModule } from './remotehost';
-import { HomeComponent } from './home/home.component';
+import { HomeModule } from './home';
 
 import { RootComponent } from './root/root.component';
-
-import { routing } from './app.routing';
 
 @NgModule({
   declarations: [
     RootComponent,
-    HomeComponent,
   ],
   imports: [
     BrowserModule,
     LayoutModule,
+    HomeModule,
     RemoteHostModule,
-    routing,
+    RouterModule.forRoot([
+      {
+        path: '**',
+        redirectTo: '',
+      }
+    ])
   ],
   providers: [],
   bootstrap: [RootComponent]
