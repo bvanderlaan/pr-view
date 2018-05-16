@@ -1,0 +1,6 @@
+<div *ngFor="let activity of activityFeed">
+  <activity-card
+    [activity]=activity
+    (onDelete)="delete($event)">
+  </activity-card>
+</div>

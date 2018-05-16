@@ -1,0 +1,27 @@
+<div class="contianer-fluid">
+  <div class="row">
+    <div class="col-xs-10">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-sm-2">
+                <a href="{{activity.actor.url}}">
+                  <img src="{{activity.actor.image}}" class="img-fluid img-thumbnail" />
+                </a>
+              </div>
+              <div class="col-sm-10">
+                  <a href="{{activity.actor.url}}">
+                    <strong>{{activity.actor.name}}</strong>
+                  </a>
+                  {{activity.action}}
+                  <a href="{{activity.pr.url}}">
+                      {{activity.pr.title}}
+                  </a>
+                </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xs-2">
+        <p>added {{activity.created_at | date : 'MMM dd yyyy'}}</p>
+    </div>
+  </div>
+</div>
