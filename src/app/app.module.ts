@@ -16,7 +16,7 @@ import { RootComponent } from './root/root.component';
     BrowserModule,
     LayoutModule,
     HomeModule,
-    RemoteHostModule,
+    RemoteHostModule.forRoot(),
     RouterModule.forRoot([
       {
         path: '**',

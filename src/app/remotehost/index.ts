@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddRemoteHostComponent } from './addremotehost/addremotehost.component'
 import { RemoteHostListComponent } from './remotehostlist/remotehostlist.component'
 import { RemoteHostCardComponent } from './remotehostcard/remotehostcard.component';
+import { RemoteHostListService } from './remotehostlist/remotehostlist.service';
 
 const routing: Routes = [
   {
@@ -37,7 +38,16 @@ const routing: Routes = [
   exports: [
     AddRemoteHostComponent,
     RemoteHostListComponent,
-  ]
+  ],
 })
 
-export class RemoteHostModule {};
+export class RemoteHostModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: RemoteHostModule,
+      providers: [ RemoteHostListService ]
+    };
+  }
+};
+export { RemoteHost } from './remotehostcard/remotehostcard.model';
+export { RemoteHostListService };
