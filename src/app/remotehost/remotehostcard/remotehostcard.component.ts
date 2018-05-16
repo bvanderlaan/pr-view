@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { RemoteHost } from './remotehostcard.model';
 
@@ -7,15 +7,13 @@ import { RemoteHost } from './remotehostcard.model';
   templateUrl: './remotehostcard.component.html',
   styleUrls: ['./remotehostcard.component.css']
 })
-export class RemoteHostCardComponent implements OnInit {
+export class RemoteHostCardComponent {
   @Input() remote: RemoteHost;
   @Output() onDelete = new EventEmitter<string>();
 
-  ngOnInit() {
+  constructor() {
     this.remote = new RemoteHost('', '', '', '', '', new Date(), new Date());
   }
-
-  constructor() { }
 
   delete() {
     this.onDelete.emit(this.remote.name);
