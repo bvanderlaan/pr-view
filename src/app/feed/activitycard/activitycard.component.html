@@ -21,7 +21,9 @@
       </div>
     </div>
     <div class="col-xs-2">
-        <p>added {{activity.created_at | date : 'MMM dd yyyy'}}</p>
+        <p>
+          <time title="{{activity.created_at | date : 'MMM dd yyyy HH:mm:ss'}}">{{activity.created_at | amTimeAgo}}</time>
+        </p>
     </div>
   </div>
 </div>

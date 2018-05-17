@@ -21,6 +21,7 @@ const routing: Routes = [
     CommonModule,
     FormsModule,
     HttpClientModule,
+    MomentModule,
     RemoteHostModule.forRoot(),
     RouterModule,
     RouterModule.forRoot(routing),

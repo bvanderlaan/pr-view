@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { MomentModule } from 'ngx-moment';
+
 import { Activity, Actor, Repository, PullRequest } from './activitycard.model';
 import { ActivityCardComponent } from './activitycard.component';
 
@@ -12,7 +14,7 @@ describe('ActivityCardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ActivityCardComponent, TestHostComponent ],
-      imports: [ RouterTestingModule ]
+      imports: [ RouterTestingModule, MomentModule ]
     })
     .compileComponents();
   }));
