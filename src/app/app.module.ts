@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { LayoutModule } from './layout';
 import { RemoteHostModule } from './remotehost';
 import { HomeModule } from './home';
+import { AboutModule } from './about';
 import { FeedModule } from './feed';
 
 import { RootComponent } from './root/root.component';
@@ -17,6 +18,7 @@ import { RootComponent } from './root/root.component';
     BrowserModule,
     LayoutModule,
     HomeModule,
+    AboutModule,
     RemoteHostModule.forRoot(),
     FeedModule.forRoot(),
     RouterModule.forRoot([
