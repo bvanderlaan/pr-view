@@ -25,11 +25,11 @@ function isClosed(json) {
   return (json.payload.action === 'closed');
 }
 
-function createActor(json) {
+function createActor(json, baseURL) {
   return Object.assign(Object.create(Actor.prototype), {
     id: json.actor.id,
     name: json.actor.display_login,
-    url: json.actor.url,
+    url: baseURL ? `${baseURL}/${json.actor.login}` : json.actor.url,
     image: json.actor.avatar_url
   });
 }
@@ -66,8 +66,8 @@ export class Activity {
               public action: string = undefined,
               public created_at: Date = undefined) {}
 
-  static fromJSON(json): Activity {
-    const actor = createActor(json)
+  static fromJSON(json, baseURL = ''): Activity {
+    const actor = createActor(json, baseURL)
     const repo = createRepo(json);
     const pr = createPR(json);
 

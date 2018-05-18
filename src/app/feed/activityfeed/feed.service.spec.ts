@@ -76,6 +76,7 @@ describe('FeedService', () => {
       actor: {
         id: 119,
         display_login: 'rwilco',
+        login: 'rwilco',
         url: 'https://github.com/api/v3/users/rwilco',
         avatar_url: 'https://github.com/avatars/u/119?'
       },
@@ -114,7 +115,7 @@ describe('FeedService', () => {
     service.get().subscribe((feed: Array<PRActivity>) => {
       expect(feed.length).toEqual(1);
 
-      const actor = new Actor(119, 'rwilco', 'https://github.com/api/v3/users/rwilco', 'https://github.com/avatars/u/119?');
+      const actor = new Actor(119, 'rwilco', 'http://git.me/rwilco', 'https://github.com/avatars/u/119?');
       const repo = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
       const pr = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', PRState.Merged);
 

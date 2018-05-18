@@ -63,7 +63,7 @@ export class FeedService {
     return this.http.get(`${url.replace(/\/$/, '')}/api/v3/users/${username}/received_events`)
       .map((response:Array<any>) => (
         response.filter(a => isWhitelistEvent(a))
-          .map(a => Activity.fromJSON(a))
+          .map(a => Activity.fromJSON(a, url.replace(/\/$/, '')))
           .sort(sortOldestToNewestGroupByPR)
           .reduce((activities: PRActivity[], activity: Activity) => {
             let prActivity = includesPRActivity(activities, activity.pr.id);
