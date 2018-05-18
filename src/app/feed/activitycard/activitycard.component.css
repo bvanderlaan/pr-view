@@ -15,7 +15,7 @@
 }
 
 .activity-card-time > p {
-  float: right;
+  text-align: right;
 }
 
 .activity-card-time > .label {
