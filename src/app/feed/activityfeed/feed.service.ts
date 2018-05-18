@@ -32,6 +32,12 @@ function sortOldestToNewestGroupByPR(lhs:Activity, rhs:Activity) {
       : 1;
 }
 
+function sortByLatestActivity(lhs:PRActivity, rhs:PRActivity) {
+  return (lhs.lastActivity.created_at < rhs.lastActivity.created_at)
+    ? 1
+    : -1;
+}
+
 function includesPRActivity(activities: PRActivity[], prNumber: string) {
   return activities.filter((a:PRActivity) => (a.pr.id === prNumber))[0]
 }
@@ -70,7 +76,7 @@ export class FeedService {
 
             return activities;
           }, new Array<PRActivity>())
-          .reverse()
+          .sort(sortByLatestActivity)
       ))
       .catch((resp:HttpErrorResponse) => Observable.throw(resp.error || 'Server error'));
   }
