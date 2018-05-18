@@ -9,6 +9,11 @@
   margin-left: 10px;
 }
 
+.activity-card-main .badge {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
 .activity-card-time > p {
   float: right;
 }
