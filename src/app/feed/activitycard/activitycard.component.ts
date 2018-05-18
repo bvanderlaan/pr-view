@@ -1,6 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Activity, Actor, Repository, PullRequest } from './activitycard.model';
+import {
+  Actor,
+  Activity,
+  PRActivity,
+  Repository,
+  PullRequest,
+} from './activitycard.model';
 
 @Component({
   selector: 'activity-card',
@@ -8,10 +14,11 @@ import { Activity, Actor, Repository, PullRequest } from './activitycard.model';
   styleUrls: ['./activitycard.component.css']
 })
 export class ActivityCardComponent {
-  @Input() activity: Activity;
+  @Input() activity: PRActivity;
   @Output() onDelete = new EventEmitter<string>();
 
   constructor() {
-    this.activity = new Activity('-1', '', new Actor(), new Repository(), new PullRequest(), '', new Date());
+    const actor = new Activity('-1', '', new Actor(), new Repository(), new PullRequest(), '', new Date());
+    this.activity = new PRActivity(actor);
   }
 }

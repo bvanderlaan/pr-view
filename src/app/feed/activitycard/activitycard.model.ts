@@ -95,6 +95,37 @@ export class PullRequest {
               public body: string = undefined) {}
 }
 
+export class PRActivity {
+  public activities: Array<Activity>;
+  public repo: Repository;
+  public pr: PullRequest;
+  constructor(private activity: Activity = undefined) {
+    this.activities = new Array<Activity>();
+    if (activity) {
+      this.repo = activity.repo;
+      this.pr = activity.pr;
+      this.addActivity(activity);
+    }
+  }
+
+  addActivity(activity:Activity) {
+    this.activities.push(activity);
+  }
+
+  includes(id:string) {
+    this.activities.some((a:Activity) => (a.id === id))
+  }
+
+  get lastActivity() {
+    return this.activities[this.activities.length-1];
+  }
+
+  get numberOfActivity() {
+    return this.activities.length;
+  }
+
+}
+
 export class Comment {
   constructor(public id: number,
               public file: string,

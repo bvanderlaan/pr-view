@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/of';
 
 import { RemoteHost, RemoteHostListService } from '../../remotehost';
-import { Activity } from '../activitycard/activitycard.model';
+import { Activity, PRActivity } from '../activitycard/activitycard.model';
 
 const whiteListedEvents = [
   'PullRequestEvent',
@@ -20,6 +20,20 @@ const whiteListedEvents = [
 
 function isWhitelistEvent({ type }) {
   return whiteListedEvents.includes(type);
+}
+
+function sortOldestToNewestGroupByPR(lhs:Activity, rhs:Activity) {
+  return lhs.pr.id === rhs.pr.id
+    ? lhs.created_at < rhs.created_at
+      ? 1
+      : -1
+    : lhs.pr.id < rhs.pr.id
+      ? -1
+      : 1;
+}
+
+function includesPRActivity(activities: PRActivity[], prNumber: string) {
+  return activities.filter((a:PRActivity) => (a.pr.id === prNumber))[0]
 }
 
 @Injectable()
@@ -35,7 +49,7 @@ export class FeedService {
     return Array.prototype.concat([], this.remoteHosts);
   }
 
-  get() : Observable<Activity[]> {
+  get() : Observable<PRActivity[]> {
     if (!this.remoteHosts.length) return Observable.of([]);
 
     const { url, username } = this.remoteHosts[0];
@@ -44,6 +58,19 @@ export class FeedService {
       .map((response:Array<any>) => (
         response.filter(a => isWhitelistEvent(a))
           .map(a => Activity.fromJSON(a))
+          .sort(sortOldestToNewestGroupByPR)
+          .reduce((activities: PRActivity[], activity: Activity) => {
+            let prActivity = includesPRActivity(activities, activity.pr.id);
+            if (prActivity) {
+              prActivity.addActivity(activity);
+            } else {
+              prActivity = new PRActivity(activity);
+              activities.push(prActivity);
+            }
+
+            return activities;
+          }, new Array<PRActivity>())
+          .reverse()
       ))
       .catch((resp:HttpErrorResponse) => Observable.throw(resp.error || 'Server error'));
   }

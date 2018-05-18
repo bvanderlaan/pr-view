@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
+import { MomentModule } from 'ngx-moment';
+
 import { FeedComponent } from './activityfeed/feed.component'
 import { ActivityCardComponent } from './activitycard/activitycard.component';
 import { RemoteHostModule } from '../remotehost';

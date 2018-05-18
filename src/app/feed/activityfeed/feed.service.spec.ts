@@ -6,7 +6,7 @@ import { HttpClientTestingModule, HttpTestingController } from "@angular/common/
 import { Observable } from 'rxjs/Rx';
 
 import { FeedService } from './feed.service';
-import { Activity, Actor, Repository, PullRequest } from '../activitycard/activitycard.model';
+import { PRActivity, Activity, Actor, Repository, PullRequest } from '../activitycard/activitycard.model';
 import { RemoteHost, RemoteHostListService } from '../../remotehost';
 
 describe('FeedService', () => {
@@ -27,8 +27,7 @@ describe('FeedService', () => {
   it('should return an empty feed array if no remote hosts', inject([FeedService], (service: FeedService) => {
     expect(service.getRemoteHosts()).toEqual([]);
 
-    service.get().subscribe((feed: Array<Activity>) => {
-      console.log('feed', feed);
+    service.get().subscribe((feed: Array<PRActivity>) => {
       expect(feed).toEqual([]);
     });
   }));
@@ -104,7 +103,7 @@ describe('FeedService', () => {
     service.loadRemoteHosts();
     expect(service.getRemoteHosts()).toContain(remoteHost);
 
-    service.get().subscribe((feed: Array<Activity>) => {
+    service.get().subscribe((feed: Array<PRActivity>) => {
       expect(feed.length).toEqual(1);
 
       const actor = new Actor(119, 'rwilco', 'https://github.com/api/v3/users/rwilco', 'https://github.com/avatars/u/119?');
@@ -112,12 +111,12 @@ describe('FeedService', () => {
       const pr = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest');
 
       const activity = feed[0];
-      expect(activity.id).toEqual('256826');
-      expect(activity.type).toEqual('PullRequestReviewCommentEvent');
-      expect(activity.actor).toEqual(actor);
+      expect(activity.lastActivity.id).toEqual('256826');
+      expect(activity.lastActivity.type).toEqual('PullRequestReviewCommentEvent');
+      expect(activity.lastActivity.actor).toEqual(actor);
       expect(activity.repo).toEqual(repo);
       expect(activity.pr).toEqual(pr);
-      expect(activity.created_at).toEqual(new Date('2017-11-24T18:32:23Z'));
+      expect(activity.lastActivity.created_at).toEqual(new Date('2017-11-24T18:32:23Z'));
     });
     backend.expectOne('http://git.me/api/v3/users/bvanderlaan/received_events').flush(response);
   }));

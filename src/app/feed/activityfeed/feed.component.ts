@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Rx';
 
-import { Activity } from '../activitycard/activitycard.model';
+import { PRActivity } from '../activitycard/activitycard.model';
 import { FeedService } from './feed.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { FeedService } from './feed.service';
   providers: [ FeedService ],
 })
 export class FeedComponent implements OnInit {
-  public activityFeed: Activity[];
+  public activityFeed: PRActivity[];
   public error: string;
 
   constructor(private feedService: FeedService) {
@@ -28,7 +28,7 @@ export class FeedComponent implements OnInit {
   }
 
   private loadActivityFeed() {
-    const getActivityFeedOperation: Observable<Activity[]> = this.feedService.get();
+    const getActivityFeedOperation: Observable<PRActivity[]> = this.feedService.get();
     getActivityFeedOperation.subscribe((feed) => {
       this.activityFeed = feed;
     });
