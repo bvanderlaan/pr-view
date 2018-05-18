@@ -1,4 +1,4 @@
-<div class="contianer-fluid activity-card">
+<div class="contianer-fluid activity-card" [ngClass]="{'activity-card-closed': activity.pr.state==1, 'activity-card-merged': activity.pr.state==2}">
   <div class="row">
     <div class="col-xs-10 activity-card-content">
       <div class="container-fluid">
@@ -29,6 +29,7 @@
       <p>
         <time title="{{activity.lastActivity.created_at | date : 'MMM dd yyyy HH:mm:ss'}}">{{activity.lastActivity.created_at | amTimeAgo}}</time>
       </p>
+      <span class="label label-default">{{activity.pr.stateText}}</span>
     </div>
   </div>
 </div>

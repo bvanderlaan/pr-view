@@ -1,7 +1,37 @@
 .activity-card {
+  margin: 5px;
   padding: 5px;
+  border: solid 1px #DFDFDF;
+  border-radius: 4px;
 }
 
 .activity-card-body {
   margin-left: 10px;
+}
+
+.activity-card-time > p {
+  float: right;
+}
+
+.activity-card-time > .label {
+  background-color: green;
+  float: right;
+}
+
+.activity-card-merged {
+  border-color: #6f42c1;
+  background-color: #F5EFFF;
+}
+
+.activity-card-merged .activity-card-time > .label {
+  background-color: #6f42c1;
+}
+
+.activity-card-closed {
+  border-color: #E80000;
+  background-color: #FFF4F4;
+}
+
+.activity-card-closed .activity-card-time > .label {
+  background-color: #E80000;
 }

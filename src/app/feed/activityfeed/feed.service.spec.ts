@@ -6,7 +6,14 @@ import { HttpClientTestingModule, HttpTestingController } from "@angular/common/
 import { Observable } from 'rxjs/Rx';
 
 import { FeedService } from './feed.service';
-import { PRActivity, Activity, Actor, Repository, PullRequest } from '../activitycard/activitycard.model';
+import {
+  PRState,
+  PRActivity,
+  Activity,
+  Actor,
+  Repository,
+  PullRequest
+} from '../activitycard/activitycard.model';
 import { RemoteHost, RemoteHostListService } from '../../remotehost';
 
 describe('FeedService', () => {
@@ -78,6 +85,7 @@ describe('FeedService', () => {
         url: 'https://github.com/api/v3/repos/bvanderlaan/test'
       },
       payload: {
+        action: 'closed',
         pull_request: {
           merged: true,
           number: '1234',
@@ -108,7 +116,7 @@ describe('FeedService', () => {
 
       const actor = new Actor(119, 'rwilco', 'https://github.com/api/v3/users/rwilco', 'https://github.com/avatars/u/119?');
       const repo = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
-      const pr = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest');
+      const pr = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', PRState.Merged);
 
       const activity = feed[0];
       expect(activity.lastActivity.id).toEqual('256826');

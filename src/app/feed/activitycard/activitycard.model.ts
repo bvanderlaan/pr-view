@@ -8,7 +8,7 @@ function getAction(json) {
       action = `commented on pull request`;
       break;
     case 'PullRequestEvent':
-      const a = (json.payload.action === 'closed')
+      const a = isClosed(json)
         ? json.payload.pull_request.merged
           ? 'merged'
           : 'closed'
@@ -19,6 +19,10 @@ function getAction(json) {
   }
 
   return action;
+}
+
+function isClosed(json) {
+  return (json.payload.action === 'closed');
 }
 
 function createActor(json) {
@@ -46,8 +50,12 @@ function createPR(json) {
     title: pull_request.title,
     url: pull_request.html_url,
     body: pull_request.body,
+    state: !isClosed(json)
+      ? PRState.Open
+      : pull_request.merged ? PRState.Merged : PRState.Closed,
   });
 }
+
 
 export class Activity {
   constructor(public id: string = undefined,
@@ -88,11 +96,26 @@ export class Repository {
               public url: string = undefined) {}
 }
 
+export enum PRState {
+  Open = 0,
+  Closed = 1,
+  Merged = 2,
+}
+
 export class PullRequest {
   constructor(public id: string = undefined,
               public title: string = undefined,
               public url: string = undefined,
-              public body: string = undefined) {}
+              public body: string = undefined,
+              public state: PRState = PRState.Open) {}
+
+  get stateText() {
+    return this.state === PRState.Open
+      ? 'Open'
+      : this.state === PRState.Closed
+        ? 'Closed'
+        : 'Merged';
+  }
 }
 
 export class PRActivity {
@@ -110,10 +133,11 @@ export class PRActivity {
 
   addActivity(activity:Activity) {
     this.activities.push(activity);
+    this.pr.state = activity.pr.state;
   }
 
   includes(id:string) {
-    this.activities.some((a:Activity) => (a.id === id))
+    return this.activities.some((a:Activity) => (a.id === id))
   }
 
   get lastActivity() {
