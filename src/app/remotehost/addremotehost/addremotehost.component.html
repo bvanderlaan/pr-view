@@ -57,7 +57,7 @@
           <div class="form-group row" [ngClass]="{'has-error': token.errors && (token.dirty || token.touched)}">
             <label for="token" class="col-sm-2 col-form-label">Your Personal Access Token</label>
             <div class="col-sm-10">
-              <input name="token" type="text" class="form-control" placeholder="What's the personal access token you want us to use to log into the host?"
+              <input name="token" type="password" class="form-control" placeholder="What's the personal access token you want us to use to log into the host?"
                 [(ngModel)]="remoteHost.token" #token="ngModel"
                 required />
 
