@@ -15,9 +15,11 @@ import { RemoteHostListService } from './remotehostlist.service';
 export class RemoteHostListComponent implements OnInit {
   public remoteHosts: RemoteHost[];
   public error: string;
+  public title: string;
 
   constructor(private remoteHostListService: RemoteHostListService, private router: Router) {
     this.remoteHosts = [];
+    this.title = 'PR-View';
   }
 
   ngOnInit() {

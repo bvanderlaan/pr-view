@@ -1,6 +1,20 @@
-<div *ngFor="let remote of remoteHosts">
-  <remote-host-card
-    [remote]=remote
-    (onDelete)="delete($event)"
-  ></remote-host-card>
-</div>
+<section>
+  <div class="jumbotron">
+    <p>
+      Remote hosts are the sites hosting your remote git repositories which you
+      are using to collaborate with others; such as <a href="https://github.com">GitHub</a>.
+      You can tell {{title}} which remote hosts to query when looking for Pull Request activity.
+    </p>
+    <p>
+      Below are all the remote hosts that you have told {{title}} to use when
+      looking up Pull Request activity. You can manage the list here.
+    </p>
+    <button class="btn btn-primary pull-right" routerLink="/remote/add">Add a Remote Host</button>
+  </div>
+  <div *ngFor="let remote of remoteHosts">
+    <remote-host-card
+      [remote]=remote
+      (onDelete)="delete($event)"
+    ></remote-host-card>
+  </div>
+</section>
