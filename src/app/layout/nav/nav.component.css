@@ -10,3 +10,7 @@
   border-radius: 0px;
   background-color: #242729;
 }
+
+.navbar-text {
+  margin-top: 0;
+}

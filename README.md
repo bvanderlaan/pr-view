@@ -1,6 +1,6 @@
 # PR-View
 
-PR-View (/preview/) is a Git activity visualizer.
+PR-View (/preview/) is a Pull Request activity visualizer.
 
 Where you can use the activity feeds in sites like GitLab or GitHub to see what is going on in a repo or organization I found that when it came to performing code reviews and following up on said reviews that a fleeting feed resulted in delays or missed responses.
 
