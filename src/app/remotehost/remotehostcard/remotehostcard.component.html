@@ -1,21 +1,25 @@
-<div class="contianer-fluid">
+<div class="contianer-fluid remote-host-card">
   <div class="row">
     <div class="col-xs-10">
       <div class="container-fluid">
-          <div class="row">
-              <div class="col-sm-12">
-                <a [routerLink]="['/remote', remote.id]">{{remote.name}}</a>
-              </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <a [routerLink]="['/remote', remote.id]">{{remote.name}}</a>
           </div>
-          <div class="row">
-              <div class="col-sm-12">
-                <p>added {{remote.modified_at | date : 'MMM dd yyyy'}}</p>
-              </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <p>added {{remote.modified_at | date : 'MMM dd yyyy'}}</p>
           </div>
+        </div>
       </div>
     </div>
     <div class="col-xs-2">
-      <button class="btn btn-danger pull-right" (click)="delete()">Remove</button>
+      <div class="pull-right vertical-center">
+        <div>
+          <button class="btn btn-danger" (click)="delete()">Remove</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

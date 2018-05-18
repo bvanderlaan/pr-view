@@ -1,0 +1,22 @@
+.remote-host-card {
+  border-top: solid 1px #DFDFDF;
+  border-bottom: solid 1px #DFDFDF;
+  padding: 5px;
+}
+
+.remote-host-card .vertical-center {
+  display: table;
+  height: 100%;
+}
+
+.remote-host-card .vertical-center > div {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.remote-host-card > .row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
