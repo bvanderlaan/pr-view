@@ -1,6 +1,11 @@
-<div *ngFor="let activity of activityFeed">
-  <activity-card
-    [activity]=activity
-    (onDelete)="delete($event)">
-  </activity-card>
-</div>
+<section>
+  <div *ngIf='!hasFeed' class="jumbotron clearfix">
+    <p>Nothing seems to be going on, no Pull Request activity found</p>
+  </div>
+  <div *ngFor="let activity of activityFeed">
+    <activity-card
+      [activity]=activity
+      (onDelete)="delete($event)">
+    </activity-card>
+  </div>
+</section>

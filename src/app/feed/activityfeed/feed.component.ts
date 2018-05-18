@@ -23,6 +23,10 @@ export class FeedComponent implements OnInit {
     this.loadActivityFeed();
   }
 
+  get hasFeed() {
+    return this.activityFeed.length > 0;
+  }
+
   clearError() {
     this.error = '';
   }
