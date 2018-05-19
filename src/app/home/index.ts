@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './home.component'
+import { FeedModule } from '../feed';
+import { RemoteHostModule } from '../remotehost';
+import { HomeComponent } from './home.component';
 
 const routing: Routes = [
   {
@@ -16,6 +18,8 @@ const routing: Routes = [
     CommonModule,
     RouterModule,
     RouterModule.forRoot(routing),
+    RemoteHostModule,
+    FeedModule,
   ],
   declarations: [
     HomeComponent,
