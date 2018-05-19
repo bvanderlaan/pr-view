@@ -32,9 +32,10 @@ export class FeedComponent implements OnInit {
   }
 
   private loadActivityFeed() {
-    const getActivityFeedOperation: Observable<PRActivity[]> = this.feedService.get();
-    getActivityFeedOperation.subscribe((feed) => {
-      this.activityFeed = feed;
-    });
+    Observable.timer(0, 60000)
+      .flatMap(() => this.feedService.get())
+      .subscribe((feed) => {
+        this.activityFeed = feed;
+      });
   }
 }

@@ -28,23 +28,23 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'app'`, async(() => {
+  it(`should have as title 'app'`, () => {
     const fixture = TestBed.createComponent(HomeComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('PR-View');
-  }));
+  });
 
-  it('should render empty feed message if no feed', async(() => {
+  it('should render empty feed message if no feed', () => {
     const fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('activity-feed').textContent).toContain('Nothing seems to be going on, no Pull Request activity found');
-  }));
+  });
 
-  it('should render no remote host message if no remote hosts', async(() => {
+  it('should render no remote host message if no remote hosts', () => {
     const fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('missing-remote-hosts').textContent).toContain('You do not have any remote hosts setup yet.');
-  }));
+  });
 });
