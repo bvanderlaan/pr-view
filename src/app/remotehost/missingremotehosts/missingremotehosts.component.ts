@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Observable } from 'rxjs/Rx';
 
@@ -11,25 +11,10 @@ import { RemoteHostListService } from '../remotehostlist/remotehostlist.service'
   styleUrls: ['./missingremotehosts.component.css'],
   providers: [ RemoteHostListService ],
 })
-export class MissingRemoteHostsComponent implements OnInit {
-  public remoteHosts: RemoteHost[];
-
-  constructor(private remoteHostListService: RemoteHostListService) {
-    this.remoteHosts = [];
-  }
-
-  ngOnInit() {
-    this.loadRemoteHosts();
-  }
+export class MissingRemoteHostsComponent {
+  constructor(private remoteHostListService: RemoteHostListService) {}
 
   get hasRemoteHosts() {
-    return this.remoteHosts.length > 0
-  }
-
-  private loadRemoteHosts() {
-    const getRemoteHostListOperation: Observable<RemoteHost[]> = this.remoteHostListService.get();
-    getRemoteHostListOperation.subscribe((remoteHosts) => {
-      this.remoteHosts = remoteHosts;
-    });
+    return this.remoteHostListService.get().length > 0;
   }
 }

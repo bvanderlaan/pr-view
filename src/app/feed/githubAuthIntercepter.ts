@@ -13,17 +13,13 @@ import { RemoteHost, RemoteHostListService } from '../remotehost';
 
 @Injectable()
 export class GithubAPIInterceptor implements HttpInterceptor {
-  protected remoteHosts: RemoteHost[];
-
-  constructor(private remoteHostListService: RemoteHostListService) {
-    this.remoteHosts = [];
-    this.loadRemoteHosts();
-  }
+  constructor(private remoteHostListService: RemoteHostListService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!this.remoteHosts.length) return next.handle(req);
+    const remoteHosts = this.remoteHostListService.get();
+    if (!remoteHosts.length) return next.handle(req);
 
-    const { url, username, token } = this.remoteHosts[0];
+    const { url, username, token } = remoteHosts[0];
 
     if (req.url.includes(url)) {
       const headers = new HttpHeaders()
@@ -34,12 +30,5 @@ export class GithubAPIInterceptor implements HttpInterceptor {
     }
 
     return next.handle(req);
-  }
-
-  private loadRemoteHosts() {
-    const getRemoteHostListOperation: Observable<RemoteHost[]> = this.remoteHostListService.get();
-    getRemoteHostListOperation.subscribe((remoteHosts) => {
-      this.remoteHosts = remoteHosts;
-    });
   }
 }

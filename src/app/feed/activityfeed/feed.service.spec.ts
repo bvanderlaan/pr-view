@@ -31,30 +31,19 @@ describe('FeedService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should return an empty feed array if no remote hosts', inject([FeedService], (service: FeedService) => {
-    expect(service.getRemoteHosts()).toEqual([]);
+  it('should return an empty feed array if no remote hosts',
+    inject([FeedService, RemoteHostListService], (service: FeedService, remoteHostListService: RemoteHostListService) => {
+      spyOn(remoteHostListService, 'get').and.returnValue([]);
 
     service.get().subscribe((feed: Array<PRActivity>) => {
       expect(feed).toEqual([]);
     });
   }));
 
-  it('should get the remote hosts on init',
-    inject([FeedService, RemoteHostListService], (service: FeedService, remoteHostListService: RemoteHostListService) => {
-    const remoteHost = new RemoteHost('123', 'me', 'url', 'uname', 'token', new Date(), new Date());
-    spyOn(remoteHostListService, 'get').and.returnValue(Observable.of([remoteHost]));
-
-    service.loadRemoteHosts();
-    expect(service.getRemoteHosts()).toContain(remoteHost);
-  }));
-
   it('should throw error if API failed',
     inject([FeedService, RemoteHostListService, HttpTestingController], (service: FeedService, remoteHostListService: RemoteHostListService, backend: HttpTestingController) => {
     const remoteHost = new RemoteHost('123', 'me', 'http://git.me', 'bvanderlaan', 'token', new Date(), new Date());
-    spyOn(remoteHostListService, 'get').and.returnValue(Observable.of([remoteHost]));
-
-    service.loadRemoteHosts();
-    expect(service.getRemoteHosts()).toContain(remoteHost);
+    spyOn(remoteHostListService, 'get').and.returnValue([remoteHost]);
 
     service.get()
       .catch(actualError => {
@@ -107,10 +96,7 @@ describe('FeedService', () => {
     }];
 
     const remoteHost = new RemoteHost('123', 'me', 'http://git.me', 'bvanderlaan', 'token', new Date(), new Date());
-    spyOn(remoteHostListService, 'get').and.returnValue(Observable.of([remoteHost]));
-
-    service.loadRemoteHosts();
-    expect(service.getRemoteHosts()).toContain(remoteHost);
+    spyOn(remoteHostListService, 'get').and.returnValue([remoteHost]);
 
     service.get().subscribe((feed: Array<PRActivity>) => {
       expect(feed.length).toEqual(1);

@@ -38,7 +38,7 @@ describe('MissingRemoteHostsComponent', () => {
   });
 
   it('should return false if no remote hosts', () => {
-    spyOn(remoteHostListService, 'get').and.returnValue(Observable.of([]));
+    spyOn(remoteHostListService, 'get').and.returnValue([]);
 
     fixture.detectChanges();
     expect(component.hasRemoteHosts).toBeFalsy();
@@ -46,14 +46,14 @@ describe('MissingRemoteHostsComponent', () => {
 
   it('should return true if remote hosts exist', () => {
     const remoteHost = new RemoteHost('123', 'me', 'url', 'uname', 'token', new Date(), new Date());
-    spyOn(remoteHostListService, 'get').and.returnValue(Observable.of([remoteHost]));
+    spyOn(remoteHostListService, 'get').and.returnValue([remoteHost]);
 
     fixture.detectChanges();
     expect(component.hasRemoteHosts).toBeTruthy();
   });
 
   it('should render component if hosts do not exist', () => {
-    spyOn(remoteHostListService, 'get').and.returnValue(Observable.of([]));
+    spyOn(remoteHostListService, 'get').and.returnValue([]);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
 
@@ -65,7 +65,7 @@ describe('MissingRemoteHostsComponent', () => {
 
   it('should not render component if hosts exist', () => {
     const remoteHost = new RemoteHost('123', 'me', 'url', 'uname', 'token', new Date(), new Date());
-    spyOn(remoteHostListService, 'get').and.returnValue(Observable.of([remoteHost]));
+    spyOn(remoteHostListService, 'get').and.returnValue([remoteHost]);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
 

@@ -44,21 +44,14 @@ function includesPRActivity(activities: PRActivity[], prNumber: string) {
 
 @Injectable()
 export class FeedService {
-  protected remoteHosts: RemoteHost[];
-
   constructor(private http: HttpClient, private remoteHostListService: RemoteHostListService) {
-    this.remoteHosts = [];
-    this.loadRemoteHosts();
-  }
-
-  getRemoteHosts() : RemoteHost[] {
-    return Array.prototype.concat([], this.remoteHosts);
   }
 
   get() : Observable<PRActivity[]> {
-    if (!this.remoteHosts.length) return Observable.of([]);
+    const remoteHosts = this.remoteHostListService.get();
+    if (!remoteHosts.length) return Observable.of([]);
 
-    const { url, username } = this.remoteHosts[0];
+    const { url, username } = remoteHosts[0];
 
     return this.http.get(`${url.replace(/\/$/, '')}/api/v3/users/${username}/received_events`)
       .map((response:Array<any>) => (
@@ -79,12 +72,5 @@ export class FeedService {
           .sort(sortByLatestActivity)
       ))
       .catch((resp:HttpErrorResponse) => Observable.throw(resp.error || 'Server error'));
-  }
-
-  loadRemoteHosts() {
-    const getRemoteHostListOperation: Observable<RemoteHost[]> = this.remoteHostListService.get();
-    getRemoteHostListOperation.subscribe((remoteHosts) => {
-      this.remoteHosts = remoteHosts;
-    });
   }
 }

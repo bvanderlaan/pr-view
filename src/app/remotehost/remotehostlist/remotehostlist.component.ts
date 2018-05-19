@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { Observable } from 'rxjs/Rx';
 
 import { RemoteHost } from '../remotehostcard/remotehostcard.model';
 import { RemoteHostListService } from './remotehostlist.service';
@@ -14,34 +11,19 @@ import { RemoteHostListService } from './remotehostlist.service';
 })
 export class RemoteHostListComponent implements OnInit {
   public remoteHosts: RemoteHost[];
-  public error: string;
   public title: string;
 
-  constructor(private remoteHostListService: RemoteHostListService, private router: Router) {
+  constructor(private remoteHostListService: RemoteHostListService) {
     this.remoteHosts = [];
     this.title = 'PR-View';
   }
 
   ngOnInit() {
-    this.loadRemoteHosts();
-  }
-
-  clearError() {
-    this.error = '';
+    this.remoteHosts = this.remoteHostListService.get();
   }
 
   delete(name: string) {
-    const deleteRemoteHostOperation: Observable<number> = this.remoteHostListService.delete(name);
-    deleteRemoteHostOperation.subscribe(() => {
-      this.clearError();
-      this.loadRemoteHosts();
-    }, (err) => { this.error = `Sorry, failed to remove the remote host: ${err}` });
-  }
-
-  private loadRemoteHosts() {
-    const getRemoteHostListOperation: Observable<RemoteHost[]> = this.remoteHostListService.get();
-    getRemoteHostListOperation.subscribe((remoteHosts) => {
-      this.remoteHosts = remoteHosts;
-    });
+    this.remoteHostListService.delete(name);
+    this.remoteHosts = this.remoteHostListService.get();
   }
 }
