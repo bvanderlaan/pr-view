@@ -1,0 +1,12 @@
+<section *ngIf="!hasRemoteHosts">
+  <div class="jumbotron clearfix">
+    <p>
+      Remote hosts are the sites hosting your remote git repositories which you
+      are using to collaborate with others; such as <a href="https://github.com">GitHub</a>.
+    </p>
+    <p>
+      You do not have any remote hosts setup yet.
+    </p>
+    <button class="btn btn-primary pull-right" routerLink="/remote/add">Add a Remote Host</button>
+  </div>
+</section>

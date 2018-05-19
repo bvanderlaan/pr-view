@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddRemoteHostComponent } from './addremotehost/addremotehost.component'
 import { RemoteHostListComponent } from './remotehostlist/remotehostlist.component'
 import { RemoteHostCardComponent } from './remotehostcard/remotehostcard.component';
+import { MissingRemoteHostsComponent } from './missingremotehosts/missingremotehosts.component';
 import { RemoteHostListService } from './remotehostlist/remotehostlist.service';
 
 const routing: Routes = [
@@ -34,10 +35,12 @@ const routing: Routes = [
     AddRemoteHostComponent,
     RemoteHostListComponent,
     RemoteHostCardComponent,
+    MissingRemoteHostsComponent,
   ],
   exports: [
     AddRemoteHostComponent,
     RemoteHostListComponent,
+    MissingRemoteHostsComponent,
   ],
 })
 
