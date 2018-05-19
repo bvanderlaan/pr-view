@@ -101,6 +101,16 @@ describe('ActivityCardModel', () => {
       expect(prActivity.numberOfActivity).toEqual(2);
     });
 
+    it('should not add an activity which already exists', () => {
+      const activity = createActivity('42', 'test');
+
+      const prActivity = new PRActivity(activity);
+      expect(prActivity.numberOfActivity).toEqual(1);
+
+      prActivity.addActivity(activity);
+      expect(prActivity.numberOfActivity).toEqual(1);
+    });
+
     it('should get last activity added', () => {
       const activity = createActivity('42', 'test', 'open', PRState.Open);
 

@@ -132,8 +132,10 @@ export class PRActivity {
   }
 
   addActivity(activity:Activity) {
-    this.activities.push(activity);
-    this.pr.state = activity.pr.state;
+    if (!this.includes(activity.id)) {
+      this.activities.push(activity);
+      this.pr.state = activity.pr.state;
+    }
   }
 
   includes(id:string) {
@@ -146,6 +148,21 @@ export class PRActivity {
 
   get numberOfActivity() {
     return this.activities.length;
+  }
+
+  static fromJSON(json) {
+    const repo = new Repository(json.repo.id, json.repo.name, json.repo.url);
+    const pr = new PullRequest(json.pr.id, json.pr.title, json.pr.url, json.pr.body, json.pr.state);
+    const activities = json.activities.map(a => {
+      const actor = new Actor(a.actor.id, a.actor.name, a.actor.url, a.actor.image);
+      return new Activity(a.id, a.type, actor, repo, pr, a.action, new Date(a.created_at));
+    });
+
+    return Object.assign(Object.create(PRActivity.prototype), {
+      pr,
+      repo,
+      activities,
+    });
   }
 
 }

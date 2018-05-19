@@ -44,6 +44,8 @@ function includesPRActivity(activities: PRActivity[], prNumber: string) {
 
 @Injectable()
 export class FeedService {
+  private prFeedKey: string = 'git-pr-activity-feed';
+
   constructor(private http: HttpClient, private remoteHostListService: RemoteHostListService) {
   }
 
@@ -68,9 +70,19 @@ export class FeedService {
             }
 
             return activities;
-          }, new Array<PRActivity>())
+          }, this.loadFeed())
           .sort(sortByLatestActivity)
       ))
+      .do((feed) => this.saveFeed(feed))
       .catch((resp:HttpErrorResponse) => Observable.throw(resp.error || 'Server error'));
+  }
+
+  private saveFeed(feed) {
+    localStorage.setItem(this.prFeedKey, JSON.stringify(feed));
+  }
+
+  private loadFeed() : Array<PRActivity> {
+    return (JSON.parse(localStorage.getItem(this.prFeedKey)) || [])
+      .map(json => PRActivity.fromJSON(json));
   }
 }

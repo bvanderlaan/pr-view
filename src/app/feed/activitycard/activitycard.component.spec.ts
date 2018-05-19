@@ -54,7 +54,7 @@ describe('ActivityCardComponent', () => {
 
   it('should set the card badge to the number of activities', () => {
     const activity = createActivity('12345', 'PullRequestReviewCommentEvent');
-    const activity2 = createActivity('12345', 'IssueCommentEvent');
+    const activity2 = createActivity('98765', 'IssueCommentEvent');
     const prActivity = new PRActivity(activity);
     prActivity.addActivity(activity2);
     component.activityCardComponent.activity = prActivity;
@@ -65,7 +65,7 @@ describe('ActivityCardComponent', () => {
 
   it('should set the card body to all activities', () => {
     const activity = createActivity('12345', 'PullRequestReviewCommentEvent', 'opened');
-    const activity2 = createActivity('12345', 'IssueCommentEvent', 'commented');
+    const activity2 = createActivity('98765', 'IssueCommentEvent', 'commented');
     const prActivity = new PRActivity(activity);
     prActivity.addActivity(activity2);
     component.activityCardComponent.activity = prActivity;
