@@ -14,3 +14,8 @@
 .navbar-text {
   margin-top: 0;
 }
+
+.fa-bars {
+  color: #9d9d9d;
+  font-size: 2em;
+}
