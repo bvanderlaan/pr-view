@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Rx';
 import { MissingRemoteHostsComponent } from './missingremotehosts.component';
 import { RemoteHost, RemoteHostListService } from '../../remotehost';
 
-fdescribe('MissingRemoteHostsComponent', () => {
+describe('MissingRemoteHostsComponent', () => {
   let component: MissingRemoteHostsComponent;
   let fixture: ComponentFixture<MissingRemoteHostsComponent>;
   let remoteHostListService: RemoteHostListService;

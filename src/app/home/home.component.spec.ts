@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { APP_BASE_HREF } from '@angular/common';
 
 import { HomeComponent } from './home.component';
+import { RemoteHostModule } from '../remotehost';
+import { FeedModule } from '../feed';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -8,7 +11,9 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
+      imports: [ RemoteHostModule, FeedModule ],
+      declarations: [ HomeComponent ],
+      providers: [ { provide: APP_BASE_HREF, useValue: '/' }]
     })
     .compileComponents();
   }));
@@ -29,10 +34,17 @@ describe('HomeComponent', () => {
     expect(app.title).toEqual('PR-View');
   }));
 
-  it('should render title in a h1 tag', async(() => {
+  it('should render empty feed message if no feed', async(() => {
     const fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to PR-View!!');
+    expect(compiled.querySelector('activity-feed').textContent).toContain('Nothing seems to be going on, no Pull Request activity found');
+  }));
+
+  it('should render no remote host message if no remote hosts', async(() => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('missing-remote-hosts').textContent).toContain('You do not have any remote hosts setup yet.');
   }));
 });
