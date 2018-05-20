@@ -40,3 +40,8 @@
 .activity-card-closed .activity-card-time > .label {
   background-color: #E80000;
 }
+
+.owner-name {
+  display: block;
+  text-align: center;
+}
