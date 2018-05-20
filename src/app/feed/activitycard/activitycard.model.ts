@@ -64,7 +64,8 @@ export class Activity {
               public repo: Repository = undefined,
               public pr: PullRequest = undefined,
               public action: string = undefined,
-              public created_at: Date = undefined) {}
+              public created_at: Date = undefined,
+              public read: boolean = false) {}
 
   static fromJSON(json, baseURL = ''): Activity {
     const actor = createActor(json, baseURL)
@@ -122,10 +123,8 @@ export class PRActivity {
   public activities: Array<Activity>;
   public repo: Repository;
   public pr: PullRequest;
-  public read: boolean;
   constructor(private activity: Activity = undefined) {
     this.activities = new Array<Activity>();
-    this.read = false;
 
     if (activity) {
       this.repo = activity.repo;
@@ -136,9 +135,9 @@ export class PRActivity {
 
   addActivity(activity:Activity) {
     if (!this.includes(activity.id)) {
+      activity.read = false;
       this.activities.push(activity);
       this.pr.state = activity.pr.state;
-      this.read = false;
     }
   }
 
@@ -147,7 +146,7 @@ export class PRActivity {
   }
 
   markRead() {
-    this.read = true;
+    this.activities.forEach((activity) => (activity.read = true));
   }
 
   get lastActivity() {
@@ -163,14 +162,13 @@ export class PRActivity {
     const pr = new PullRequest(json.pr.id, json.pr.title, json.pr.url, json.pr.body, json.pr.state);
     const activities = json.activities.map(a => {
       const actor = new Actor(a.actor.id, a.actor.name, a.actor.url, a.actor.image);
-      return new Activity(a.id, a.type, actor, repo, pr, a.action, new Date(a.created_at));
+      return new Activity(a.id, a.type, actor, repo, pr, a.action, new Date(a.created_at), a.read);
     });
 
     return Object.assign(Object.create(PRActivity.prototype), {
       pr,
       repo,
       activities,
-      read: json.read,
     });
   }
 

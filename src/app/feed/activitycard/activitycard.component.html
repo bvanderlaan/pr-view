@@ -11,7 +11,6 @@
           <div class="row">
             <a href="{{activity.pr.url}}" target=”_blank” class="pr-link">
                 <span class="activity-card-title">{{activity.pr.title}}</span>
-                <span class="badge" *ngIf='!activity.read'>New</span>
             </a>
           </div>
           <div class="activity-card-body">
@@ -20,6 +19,7 @@
                 <strong>{{a.actor.name}}</strong>
               </a>
               {{a.action}}
+              <span class="badge" *ngIf='!a.read'>New</span>
             </div>
           </div>
         </div>

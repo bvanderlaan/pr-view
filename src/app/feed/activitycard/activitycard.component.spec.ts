@@ -49,18 +49,18 @@ describe('ActivityCardComponent', () => {
 
     component.activityCardComponent.activity = new PRActivity(activity);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.activity-card-body').innerText).toEqual('roger merged\n');
+    expect(fixture.nativeElement.querySelector('.activity-card-body').innerText).toContain('roger merged');
   });
 
   it('should set the card badge to new', () => {
     const activity = createActivity('12345', 'PullRequestReviewCommentEvent');
-    const activity2 = createActivity('98765', 'IssueCommentEvent');
     const prActivity = new PRActivity(activity);
-    prActivity.read = true;
+    activity.read = true;
     component.activityCardComponent.activity = prActivity;
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.badge')).toBeNull();
 
+    const activity2 = createActivity('98765', 'IssueCommentEvent');
     prActivity.addActivity(activity2);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.badge').innerText).toEqual('New');
@@ -74,7 +74,7 @@ describe('ActivityCardComponent', () => {
     component.activityCardComponent.activity = prActivity;
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.activity-card-body').innerText).toEqual('roger opened\nroger commented\n');
+    expect(fixture.nativeElement.querySelector('.activity-card-body').innerText).toEqual('roger opened New\nroger commented New\n');
   });
 });
 
