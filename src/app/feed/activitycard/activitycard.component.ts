@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  ElementRef,
+  Input,
+  Output,
+  AfterViewInit
+} from '@angular/core';
+
+import { Observable } from 'rxjs/Rx';
 
 import {
   Actor,
@@ -13,12 +22,23 @@ import {
   templateUrl: './activitycard.component.html',
   styleUrls: ['./activitycard.component.css']
 })
-export class ActivityCardComponent {
+export class ActivityCardComponent implements AfterViewInit {
   @Input() activity: PRActivity;
-  @Output() onDelete = new EventEmitter<string>();
+  @Output() onRead = new EventEmitter<string>();
 
-  constructor() {
+  constructor(private element: ElementRef) {
     const actor = new Activity('-1', '', new Actor(), new Repository(), new PullRequest(), '', new Date());
     this.activity = new PRActivity(actor);
+  }
+
+  ngAfterViewInit() {
+    const node = this.element.nativeElement.querySelector('a.pr-link');
+    Observable.fromEvent(node, 'click')
+      .subscribe({
+        next: () => {
+          this.activity.markRead();
+          this.onRead.emit(this.activity.pr.id);
+        },
+      });
   }
 }

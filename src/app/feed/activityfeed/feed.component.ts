@@ -27,6 +27,10 @@ export class FeedComponent implements OnInit {
     return this.activityFeed.length > 0;
   }
 
+  save() {
+    this.feedService.saveFeed(this.activityFeed);
+  }
+
   clearError() {
     this.error = '';
   }

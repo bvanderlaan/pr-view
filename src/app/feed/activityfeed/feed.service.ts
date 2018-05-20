@@ -77,7 +77,7 @@ export class FeedService {
       .catch((resp:HttpErrorResponse) => Observable.throw(resp.error || 'Server error'));
   }
 
-  private saveFeed(feed) {
+  saveFeed(feed) {
     localStorage.setItem(this.prFeedKey, JSON.stringify(feed));
   }
 

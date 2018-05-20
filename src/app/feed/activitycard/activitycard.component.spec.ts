@@ -52,15 +52,18 @@ describe('ActivityCardComponent', () => {
     expect(fixture.nativeElement.querySelector('.activity-card-body').innerText).toEqual('roger merged\n');
   });
 
-  it('should set the card badge to the number of activities', () => {
+  it('should set the card badge to new', () => {
     const activity = createActivity('12345', 'PullRequestReviewCommentEvent');
     const activity2 = createActivity('98765', 'IssueCommentEvent');
     const prActivity = new PRActivity(activity);
-    prActivity.addActivity(activity2);
+    prActivity.read = true;
     component.activityCardComponent.activity = prActivity;
     fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.badge')).toBeNull();
 
-    expect(fixture.nativeElement.querySelector('.badge').innerText).toEqual('2');
+    prActivity.addActivity(activity2);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.badge').innerText).toEqual('New');
   });
 
   it('should set the card body to all activities', () => {

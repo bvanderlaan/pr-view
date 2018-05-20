@@ -122,8 +122,11 @@ export class PRActivity {
   public activities: Array<Activity>;
   public repo: Repository;
   public pr: PullRequest;
+  public read: boolean;
   constructor(private activity: Activity = undefined) {
     this.activities = new Array<Activity>();
+    this.read = false;
+
     if (activity) {
       this.repo = activity.repo;
       this.pr = activity.pr;
@@ -135,11 +138,16 @@ export class PRActivity {
     if (!this.includes(activity.id)) {
       this.activities.push(activity);
       this.pr.state = activity.pr.state;
+      this.read = false;
     }
   }
 
   includes(id:string) {
     return this.activities.some((a:Activity) => (a.id === id))
+  }
+
+  markRead() {
+    this.read = true;
   }
 
   get lastActivity() {
@@ -162,6 +170,7 @@ export class PRActivity {
       pr,
       repo,
       activities,
+      read: json.read,
     });
   }
 
