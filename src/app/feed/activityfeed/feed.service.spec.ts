@@ -67,7 +67,6 @@ describe('FeedService', () => {
       type: 'PullRequestReviewCommentEvent',
       actor: {
         id: 119,
-        display_login: 'rwilco',
         login: 'rwilco',
         url: 'https://github.com/api/v3/users/rwilco',
         avatar_url: 'https://github.com/avatars/u/119?'
@@ -84,7 +83,13 @@ describe('FeedService', () => {
           number: '1234',
           title: 'This is a test PullRequest',
           body: 'This is the body of the test PullRequest',
-          html_url: 'https://github.com/bvanderlaan/test/pull/1234'
+          html_url: 'https://github.com/bvanderlaan/test/pull/1234',
+          user: {
+            id: 119,
+            login: 'rwilco',
+            url: 'https://github.com/api/v3/users/rwilco',
+            avatar_url: 'https://github.com/avatars/u/119?',
+          },
         },
       },
       public: true,
@@ -108,7 +113,7 @@ describe('FeedService', () => {
 
       const actor = new Actor(119, 'rwilco', 'http://git.me/rwilco', 'https://github.com/avatars/u/119?');
       const repo = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
-      const pr = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', PRState.Merged);
+      const pr = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', actor, PRState.Merged);
 
       const activity = feed[0];
       expect(activity.lastActivity.id).toEqual('256826');
@@ -129,7 +134,6 @@ describe('FeedService', () => {
       type: 'PullRequestReviewCommentEvent',
       actor: {
         id: 119,
-        display_login: 'rwilco',
         login: 'rwilco',
         url: 'https://github.com/api/v3/users/rwilco',
         avatar_url: 'https://github.com/avatars/u/119?'
@@ -146,7 +150,13 @@ describe('FeedService', () => {
           number: '1234',
           title: 'This is a test PullRequest',
           body: 'This is the body of the test PullRequest',
-          html_url: 'https://github.com/bvanderlaan/test/pull/1234'
+          html_url: 'https://github.com/bvanderlaan/test/pull/1234',
+          user: {
+            id: 119,
+            login: 'rwilco',
+            url: 'https://github.com/api/v3/users/rwilco',
+            avatar_url: 'https://github.com/avatars/u/119?',
+          },
         },
       },
       public: true,
@@ -186,7 +196,13 @@ describe('FeedService', () => {
         "title": "This is another test PullRequest",
         "url": "https://github.com/bvanderlaan/test/pull/5555",
         "body": "This is the body of the other test PullRequest",
-        "state": 0
+        "state": 0,
+        "owner": {
+          "id": 5,
+          "name": "jfive",
+          "url": "http://git.me/jfive",
+          "image": "https://github.com/avatars/u/5?"
+        }
       }
     }]`);
 
@@ -196,7 +212,7 @@ describe('FeedService', () => {
 
       const actor1 = new Actor(5, 'jfive', 'http://git.me/jfive', 'https://github.com/avatars/u/5?');
       const repo1 = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
-      const pr1 = new PullRequest('5555', 'This is another test PullRequest', 'https://github.com/bvanderlaan/test/pull/5555', 'This is the body of the other test PullRequest', PRState.Open);
+      const pr1 = new PullRequest('5555', 'This is another test PullRequest', 'https://github.com/bvanderlaan/test/pull/5555', 'This is the body of the other test PullRequest', actor1, PRState.Open);
 
       const activity1 = feed[0];
       expect(activity1.lastActivity.id).toEqual('000000');
@@ -208,7 +224,7 @@ describe('FeedService', () => {
 
       const actor2 = new Actor(119, 'rwilco', 'http://git.me/rwilco', 'https://github.com/avatars/u/119?');
       const repo2 = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
-      const pr2 = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', PRState.Merged);
+      const pr2 = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', actor2, PRState.Merged);
       const activity2 = feed[1];
       expect(activity2.lastActivity.id).toEqual('256826');
       expect(activity2.lastActivity.type).toEqual('PullRequestReviewCommentEvent');
@@ -227,7 +243,6 @@ describe('FeedService', () => {
       type: 'PullRequestReviewCommentEvent',
       actor: {
         id: 119,
-        display_login: 'rwilco',
         login: 'rwilco',
         url: 'https://github.com/api/v3/users/rwilco',
         avatar_url: 'https://github.com/avatars/u/119?'
@@ -244,7 +259,13 @@ describe('FeedService', () => {
           number: '1234',
           title: 'This is a test PullRequest',
           body: 'This is the body of the test PullRequest',
-          html_url: 'https://github.com/bvanderlaan/test/pull/1234'
+          html_url: 'https://github.com/bvanderlaan/test/pull/1234',
+          user: {
+            id: 119,
+            login: 'rwilco',
+            url: 'https://github.com/api/v3/users/rwilco',
+            avatar_url: 'https://github.com/avatars/u/119?',
+          },
         },
       },
       public: true,
@@ -284,7 +305,13 @@ describe('FeedService', () => {
         "title": "This is a test PullRequest",
         "url": "https://github.com/bvanderlaan/test/pull/1234",
         "body": "This is the body of the test PullRequest",
-        "state": 0
+        "state": 0,
+        "owner": {
+          "id": 119,
+          "name": "rwilco",
+          "url": "http://git.me/rwilco",
+          "image": "https://github.com/avatars/u/119?"
+        }
       }
     }]`);
 
@@ -295,7 +322,7 @@ describe('FeedService', () => {
       const actor1 = new Actor(5, 'jfive', 'http://git.me/jfive', 'https://github.com/avatars/u/5?');
       const actor2 = new Actor(119, 'rwilco', 'http://git.me/rwilco', 'https://github.com/avatars/u/119?');
       const repo = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
-      const pr = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', PRState.Merged);
+      const pr = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', actor2, PRState.Merged);
 
       const activity = feed[0];
       expect(activity.activities[0].id).toEqual('000000');

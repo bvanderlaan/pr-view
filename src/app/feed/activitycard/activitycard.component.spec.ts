@@ -11,6 +11,7 @@ function createActivity(id:string, type:string, action:string = 'merged') {
   const actor = new Actor(999, 'roger');
   const repo = new Repository();
   const pr = new PullRequest('117', 'This is a PR');
+  pr.owner = actor;
   return new Activity(id, type, actor, repo, pr, action, new Date());
 }
 

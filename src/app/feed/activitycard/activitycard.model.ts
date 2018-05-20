@@ -25,12 +25,12 @@ function isClosed(json) {
   return (json.payload.action === 'closed');
 }
 
-function createActor(json, baseURL) {
+function createActor(actor, baseURL = undefined) {
   return Object.assign(Object.create(Actor.prototype), {
-    id: json.actor.id,
-    name: json.actor.display_login,
-    url: baseURL ? `${baseURL}/${json.actor.login}` : json.actor.url,
-    image: json.actor.avatar_url
+    id: actor.id,
+    name: actor.login,
+    url: baseURL ? `${baseURL}/${actor.login}` : actor.url,
+    image: actor.avatar_url
   });
 }
 
@@ -42,7 +42,7 @@ function createRepo(json) {
   });
 }
 
-function createPR(json) {
+function createPR(json, baseURL = undefined) {
   const pull_request = json.payload.pull_request || json.payload.issue;
 
   return Object.assign(Object.create(PullRequest.prototype), {
@@ -50,6 +50,7 @@ function createPR(json) {
     title: pull_request.title,
     url: pull_request.html_url,
     body: pull_request.body,
+    owner: createActor(pull_request.user, baseURL),
     state: !isClosed(json)
       ? PRState.Open
       : pull_request.merged ? PRState.Merged : PRState.Closed,
@@ -68,9 +69,9 @@ export class Activity {
               public read: boolean = false) {}
 
   static fromJSON(json, baseURL = ''): Activity {
-    const actor = createActor(json, baseURL)
+    const actor = createActor(json.actor, baseURL)
     const repo = createRepo(json);
-    const pr = createPR(json);
+    const pr = createPR(json, baseURL);
 
     return Object.assign(Object.create(Activity.prototype), {
       actor,
@@ -108,6 +109,7 @@ export class PullRequest {
               public title: string = undefined,
               public url: string = undefined,
               public body: string = undefined,
+              public owner: Actor = new Actor(),
               public state: PRState = PRState.Open) {}
 
   get stateText() {
@@ -159,7 +161,8 @@ export class PRActivity {
 
   static fromJSON(json) {
     const repo = new Repository(json.repo.id, json.repo.name, json.repo.url);
-    const pr = new PullRequest(json.pr.id, json.pr.title, json.pr.url, json.pr.body, json.pr.state);
+    const prOwner = new Actor(json.pr.owner.id, json.pr.owner.name, json.pr.owner.url, json.pr.owner.image);
+    const pr = new PullRequest(json.pr.id, json.pr.title, json.pr.url, json.pr.body, prOwner, json.pr.state);
     const activities = json.activities.map(a => {
       const actor = new Actor(a.actor.id, a.actor.name, a.actor.url, a.actor.image);
       return new Activity(a.id, a.type, actor, repo, pr, a.action, new Date(a.created_at), a.read);
