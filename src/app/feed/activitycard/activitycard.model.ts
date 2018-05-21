@@ -34,11 +34,11 @@ function createActor(actor, baseURL = undefined) {
   });
 }
 
-function createRepo(json) {
+function createRepo(json, baseURL = undefined) {
   return Object.assign(Object.create(Repository.prototype), {
     id: json.repo.id,
     name: json.repo.name,
-    url: json.repo.url,
+    url: baseURL ? `${baseURL}/${json.repo.name}` : json.repo.url,
   });
 }
 
@@ -70,7 +70,7 @@ export class Activity {
 
   static fromJSON(json, baseURL = ''): Activity {
     const actor = createActor(json.actor, baseURL)
-    const repo = createRepo(json);
+    const repo = createRepo(json, baseURL);
     const pr = createPR(json, baseURL);
 
     return Object.assign(Object.create(Activity.prototype), {

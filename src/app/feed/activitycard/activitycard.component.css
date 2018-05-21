@@ -51,3 +51,10 @@
   display: block;
   text-align: center;
 }
+
+.activity-card-target-repo {
+  margin-top: 5px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-top: solid 1px #DFDFDF;
+}

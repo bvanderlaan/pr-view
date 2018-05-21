@@ -112,7 +112,7 @@ describe('FeedService', () => {
       expect(feed.length).toEqual(1);
 
       const actor = new Actor(119, 'rwilco', 'http://git.me/rwilco', 'https://github.com/avatars/u/119?');
-      const repo = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
+      const repo = new Repository(9, 'bvanderlaan/test', 'http://git.me/bvanderlaan/test');
       const pr = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', actor, PRState.Merged);
 
       const activity = feed[0];
@@ -190,7 +190,7 @@ describe('FeedService', () => {
       "repo": {
         "id": 9,
         "name": "bvanderlaan/test",
-        "url": "https://github.com/api/v3/repos/bvanderlaan/test"
+        "url": "https://github.com/bvanderlaan/test"
       },
       "pr": {
         "id": "5555",
@@ -212,7 +212,7 @@ describe('FeedService', () => {
       expect(localStorage.setItem).toHaveBeenCalled();
 
       const actor1 = new Actor(5, 'jfive', 'http://git.me/jfive', 'https://github.com/avatars/u/5?');
-      const repo1 = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
+      const repo1 = new Repository(9, 'bvanderlaan/test', 'https://github.com/bvanderlaan/test');
       const pr1 = new PullRequest('5555', 'This is another test PullRequest', 'https://github.com/bvanderlaan/test/pull/5555', 'This is the body of the other test PullRequest', actor1, PRState.Open);
 
       const activity1 = feed[0];
@@ -225,7 +225,7 @@ describe('FeedService', () => {
       expect(activity1.lastActivity.created_at).toEqual(new Date('2018-11-24T18:32:23Z'));
 
       const actor2 = new Actor(119, 'rwilco', 'http://git.me/rwilco', 'https://github.com/avatars/u/119?');
-      const repo2 = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
+      const repo2 = new Repository(9, 'bvanderlaan/test', 'http://git.me/bvanderlaan/test');
       const pr2 = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', actor2, PRState.Merged);
       const activity2 = feed[1];
       expect(activity2.lastActivity.id).toEqual('256826');
@@ -301,7 +301,7 @@ describe('FeedService', () => {
       "repo": {
         "id": 9,
         "name": "bvanderlaan/test",
-        "url": "https://github.com/api/v3/repos/bvanderlaan/test"
+        "url": "https://github.com/bvanderlaan/test"
       },
       "pr": {
         "id": "1234",
@@ -324,7 +324,7 @@ describe('FeedService', () => {
 
       const actor1 = new Actor(5, 'jfive', 'http://git.me/jfive', 'https://github.com/avatars/u/5?');
       const actor2 = new Actor(119, 'rwilco', 'http://git.me/rwilco', 'https://github.com/avatars/u/119?');
-      const repo = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
+      const repo = new Repository(9, 'bvanderlaan/test', 'https://github.com/bvanderlaan/test');
       const pr = new PullRequest('1234', 'This is a test PullRequest', 'https://github.com/bvanderlaan/test/pull/1234', 'This is the body of the test PullRequest', actor2, PRState.Merged);
 
       const activity = feed[0];
@@ -364,7 +364,7 @@ describe('FeedService', () => {
       "repo": {
         "id": 9,
         "name": "bvanderlaan/test",
-        "url": "https://github.com/api/v3/repos/bvanderlaan/test"
+        "url": "https://github.com/bvanderlaan/test"
       },
       "pr": {
         "id": "5555",
@@ -396,7 +396,7 @@ describe('FeedService', () => {
       "repo": {
         "id": 9,
         "name": "bvanderlaan/test",
-        "url": "https://github.com/api/v3/repos/bvanderlaan/test"
+        "url": "https://github.com/bvanderlaan/test"
       },
       "pr": {
         "id": "4444",
@@ -420,7 +420,7 @@ describe('FeedService', () => {
       expect(localStorage.setItem).toHaveBeenCalled();
 
       const actor1 = new Actor(5, 'jfive', 'http://git.me/jfive', 'https://github.com/avatars/u/5?');
-      const repo1 = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
+      const repo1 = new Repository(9, 'bvanderlaan/test', 'https://github.com/bvanderlaan/test');
       const pr1 = new PullRequest('5555', 'This is another test PullRequest', 'https://github.com/bvanderlaan/test/pull/5555', 'This is the body of the other test PullRequest', actor1, PRState.Open);
 
       const activity1 = feed[0];
