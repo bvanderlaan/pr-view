@@ -1,28 +1,24 @@
 <div class="container-fluid activity-card" [ngClass]="{'activity-card-closed': activity.pr.state==1, 'activity-card-merged': activity.pr.state==2}">
   <div class="row">
-    <div class="col-xs-10 activity-card-content">
-      <div class="container-fluid">
-        <div class="hidden-xs col-sm-2 activity-card-thumbnail">
-          <a href="{{activity.pr.owner.url}}" target=”_blank”>
-            <img src="{{activity.pr.owner.image}}" class="img-fluid img-thumbnail" />
-            <strong class="owner-name">{{activity.pr.owner.name}}</strong>
+    <div class="hidden-xs col-sm-2 col-lg-1 activity-card-thumbnail">
+      <a href="{{activity.pr.owner.url}}" target=”_blank”>
+        <img src="{{activity.pr.owner.image}}" class="img-fluid img-thumbnail" />
+        <strong class="owner-name">{{activity.pr.owner.name}}</strong>
+      </a>
+    </div>
+    <div class="col-xs-10 col-sm-8 col-lg-9 activity-card-main">
+      <div>
+        <a href="{{activity.pr.url}}" target=”_blank” class="pr-link">
+            <span class="activity-card-title">{{activity.pr.title}}</span>
+        </a>
+      </div>
+      <div class="activity-card-body">
+        <div *ngFor="let a of activity.activities">
+          <a href="{{a.actor.url}}" target=”_blank”>
+            <strong>{{a.actor.name}}</strong>
           </a>
-        </div>
-        <div class="col-sm-10 activity-card-main">
-          <div class="row">
-            <a href="{{activity.pr.url}}" target=”_blank” class="pr-link">
-                <span class="activity-card-title">{{activity.pr.title}}</span>
-            </a>
-          </div>
-          <div class="activity-card-body">
-            <div class="row" *ngFor="let a of activity.activities">
-              <a href="{{a.actor.url}}" target=”_blank”>
-                <strong>{{a.actor.name}}</strong>
-              </a>
-              {{a.action}}
-              <span class="badge" *ngIf='!a.read'>New</span>
-            </div>
-          </div>
+          {{a.action}}
+          <span class="badge" *ngIf='!a.read'>New</span>
         </div>
       </div>
     </div>
