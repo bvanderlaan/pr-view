@@ -61,6 +61,12 @@
                 [(ngModel)]="remoteHost.token" #token="ngModel"
                 required />
 
+              <div class="alert alert-warning">
+                <em>
+                  <strong>Note:</strong> We store the Personal Access Token in your browsers local storage as plain text.
+                  Please use a token with permissions restricted to readonly access to your notifications.
+                </em>
+              </div>
               <div *ngIf="token.errors && (token.dirty || token.touched)" class="alert alert-danger fade in">
                   We need to know your personal access token so we can log into your host
               </div>
