@@ -125,8 +125,11 @@ export class PRActivity {
   public activities: Array<Activity>;
   public repo: Repository;
   public pr: PullRequest;
+  private deleted: boolean;
+
   constructor(private activity: Activity = undefined) {
     this.activities = new Array<Activity>();
+    this.deleted = false;
 
     if (activity) {
       this.repo = activity.repo;
@@ -138,6 +141,7 @@ export class PRActivity {
   addActivity(activity:Activity) {
     if (!this.includes(activity.id)) {
       activity.read = false;
+      this.deleted = false;
       this.activities.push(activity);
       this.pr.state = activity.pr.state;
     }
@@ -149,6 +153,14 @@ export class PRActivity {
 
   markRead() {
     this.activities.forEach((activity) => (activity.read = true));
+  }
+
+  get isDeleted() {
+    return this.deleted;
+  }
+
+  delete() {
+    this.deleted = true;
   }
 
   get lastActivity() {
@@ -172,6 +184,7 @@ export class PRActivity {
       pr,
       repo,
       activities,
+      deleted: json.deleted,
     });
   }
 

@@ -25,6 +25,7 @@ import {
 export class ActivityCardComponent implements AfterViewInit {
   @Input() activity: PRActivity;
   @Output() onRead = new EventEmitter<string>();
+  @Output() onDelete = new EventEmitter<string>();
 
   constructor(private element: ElementRef) {
     const actor = new Activity('-1', '', new Actor(), new Repository(), new PullRequest(), '', new Date());
@@ -33,12 +34,19 @@ export class ActivityCardComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     const node = this.element.nativeElement.querySelector('a.pr-link');
-    Observable.fromEvent(node, 'click')
-      .subscribe({
-        next: () => {
-          this.activity.markRead();
-          this.onRead.emit(this.activity.pr.id);
-        },
-      });
+    if (node) {
+      Observable.fromEvent(node, 'click')
+        .subscribe({
+          next: () => {
+            this.activity.markRead();
+            this.onRead.emit(this.activity.pr.id);
+          },
+        });
+    }
+  }
+
+  clearActivity() {
+    this.activity.delete();
+    this.onDelete.emit(this.activity.pr.id);
   }
 }

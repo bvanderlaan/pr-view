@@ -14,6 +14,7 @@
   border-color: #0062cc;
 }
 
+.activity-card-time > .close,
 .activity-card-time > p {
   text-align: right;
 }

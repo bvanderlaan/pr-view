@@ -42,6 +42,19 @@ function includesPRActivity(activities: PRActivity[], prNumber: string) {
   return activities.filter((a:PRActivity) => (a.pr.id === prNumber))[0]
 }
 
+function getDeletedReapTime() {
+  //                               day  hour min  sec   msec
+  const twoWeeksAgo = Date.now() - (14 * 24 * 60 * 60 * 1000);
+  return twoWeeksAgo;
+}
+
+function canDeletedActivityBeReaped(prActivity: PRActivity) {
+  const reapTime = getDeletedReapTime();
+  return (prActivity.isDeleted && (prActivity.lastActivity.created_at.getTime() < reapTime))
+    ? true
+    : false;
+}
+
 @Injectable()
 export class FeedService {
   private prFeedKey: string = 'git-pr-activity-feed';
@@ -71,6 +84,7 @@ export class FeedService {
 
             return activities;
           }, this.loadFeed())
+          .filter((prActivity: PRActivity) => !canDeletedActivityBeReaped(prActivity))
           .sort(sortByLatestActivity)
       ))
       .do((feed) => this.saveFeed(feed))

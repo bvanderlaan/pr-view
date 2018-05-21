@@ -167,5 +167,25 @@ describe('ActivityCardModel', () => {
 
       expect(prActivity.includes('100')).toBeFalsy();
     });
+
+    it('should mark PR activity as deleted', () => {
+      const activity = createActivity('42', 'test', 'open', PRState.Open);
+      const prActivity = new PRActivity(activity);
+      expect(prActivity.isDeleted).toBeFalsy();
+
+      prActivity.delete();
+      expect(prActivity.isDeleted).toBeTruthy();
+    });
+
+    it('should un-delete PR if new activity is added', () => {
+      const activity = createActivity('42', 'test', 'open', PRState.Open);
+      const prActivity = new PRActivity(activity);
+      prActivity.delete();
+      expect(prActivity.isDeleted).toBeTruthy();
+
+      const activity2 = createActivity('55', 'test', 'open', PRState.Open);
+      prActivity.addActivity(activity2)
+      expect(prActivity.isDeleted).toBeFalsy();
+    });
   })
 });

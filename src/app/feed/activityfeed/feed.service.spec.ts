@@ -122,6 +122,7 @@ describe('FeedService', () => {
       expect(activity.repo).toEqual(repo);
       expect(activity.pr).toEqual(pr);
       expect(activity.lastActivity.created_at).toEqual(new Date('2017-11-24T18:32:23Z'));
+      expect(activity.isDeleted).toBeFalsy();
       expect(localStorage.setItem).toHaveBeenCalled();
     });
     backend.expectOne('http://git.me/api/v3/users/bvanderlaan/received_events').flush(response);
@@ -220,6 +221,7 @@ describe('FeedService', () => {
       expect(activity1.lastActivity.actor).toEqual(actor1);
       expect(activity1.repo).toEqual(repo1);
       expect(activity1.pr).toEqual(pr1);
+      expect(activity1.isDeleted).toBeFalsy();
       expect(activity1.lastActivity.created_at).toEqual(new Date('2018-11-24T18:32:23Z'));
 
       const actor2 = new Actor(119, 'rwilco', 'http://git.me/rwilco', 'https://github.com/avatars/u/119?');
@@ -231,6 +233,7 @@ describe('FeedService', () => {
       expect(activity2.lastActivity.actor).toEqual(actor2);
       expect(activity2.repo).toEqual(repo2);
       expect(activity2.pr).toEqual(pr2);
+      expect(activity2.isDeleted).toBeFalsy();
       expect(activity2.lastActivity.created_at).toEqual(new Date('2017-11-24T18:32:23Z'));
     });
     backend.expectOne('http://git.me/api/v3/users/bvanderlaan/received_events').flush(response);
@@ -337,5 +340,98 @@ describe('FeedService', () => {
       expect(activity.pr).toEqual(pr);
     });
     backend.expectOne('http://git.me/api/v3/users/bvanderlaan/received_events').flush(response);
+  }));
+
+  it('should reap deleted PR activities',
+    inject([FeedService, RemoteHostListService, HttpTestingController], (service: FeedService, remoteHostListService: RemoteHostListService, backend: HttpTestingController) => {
+    const remoteHost = new RemoteHost('123', 'me', 'http://git.me', 'bvanderlaan', 'token', new Date(), new Date());
+    spyOn(remoteHostListService, 'get').and.returnValue([remoteHost]);
+    spyOn(localStorage, 'setItem').and.returnValue(null);
+    spyOn(localStorage, 'getItem').and.returnValue(`[{
+      "deleted": true,
+      "activities": [{
+        "id": "000000",
+        "action": "commented",
+        "type": "PullRequestEvent",
+        "created_at": "2018-05-20T18:32:23Z",
+        "actor": {
+          "id": 5,
+          "name": "jfive",
+          "url": "http://git.me/jfive",
+          "image": "https://github.com/avatars/u/5?"
+        }
+      }],
+      "repo": {
+        "id": 9,
+        "name": "bvanderlaan/test",
+        "url": "https://github.com/api/v3/repos/bvanderlaan/test"
+      },
+      "pr": {
+        "id": "5555",
+        "title": "This is another test PullRequest",
+        "url": "https://github.com/bvanderlaan/test/pull/5555",
+        "body": "This is the body of the other test PullRequest",
+        "state": 0,
+        "owner": {
+          "id": 5,
+          "name": "jfive",
+          "url": "http://git.me/jfive",
+          "image": "https://github.com/avatars/u/5?"
+        }
+      }
+    }, {
+      "deleted": true,
+      "activities": [{
+        "id": "111111",
+        "action": "commented",
+        "type": "PullRequestEvent",
+        "created_at": "2018-04-01T18:32:23Z",
+        "actor": {
+          "id": 119,
+          "name": "rwilco",
+          "url": "http://git.me/rwilco",
+          "image": "https://github.com/avatars/u/119?"
+        }
+      }],
+      "repo": {
+        "id": 9,
+        "name": "bvanderlaan/test",
+        "url": "https://github.com/api/v3/repos/bvanderlaan/test"
+      },
+      "pr": {
+        "id": "4444",
+        "title": "This is yet another test PullRequest",
+        "url": "https://github.com/bvanderlaan/test/pull/5555",
+        "body": "This is the body of yet another other test PullRequest",
+        "state": 0,
+        "owner": {
+          "id": 119,
+          "name": "rwilco",
+          "url": "http://git.me/rwilco",
+          "image": "https://github.com/avatars/u/119?"
+        }
+      }
+    }]`);
+
+    spyOn(Date, 'now').and.returnValue(1526909640163); // May 21, 2018
+
+    service.get().subscribe((feed: Array<PRActivity>) => {
+      expect(feed.length).toEqual(1);
+      expect(localStorage.setItem).toHaveBeenCalled();
+
+      const actor1 = new Actor(5, 'jfive', 'http://git.me/jfive', 'https://github.com/avatars/u/5?');
+      const repo1 = new Repository(9, 'bvanderlaan/test', 'https://github.com/api/v3/repos/bvanderlaan/test');
+      const pr1 = new PullRequest('5555', 'This is another test PullRequest', 'https://github.com/bvanderlaan/test/pull/5555', 'This is the body of the other test PullRequest', actor1, PRState.Open);
+
+      const activity1 = feed[0];
+      expect(activity1.lastActivity.id).toEqual('000000');
+      expect(activity1.lastActivity.type).toEqual('PullRequestEvent');
+      expect(activity1.lastActivity.actor).toEqual(actor1);
+      expect(activity1.repo).toEqual(repo1);
+      expect(activity1.pr).toEqual(pr1);
+      expect(activity1.isDeleted).toBeTruthy();
+      expect(activity1.lastActivity.created_at).toEqual(new Date('2018-05-20T18:32:23Z'));
+    });
+    backend.expectOne('http://git.me/api/v3/users/bvanderlaan/received_events').flush([]);
   }));
 });

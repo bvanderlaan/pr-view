@@ -1,4 +1,6 @@
-<div class="container-fluid activity-card" [ngClass]="{'activity-card-closed': activity.pr.state==1, 'activity-card-merged': activity.pr.state==2}">
+<div class="container-fluid activity-card"
+     *ngIf="!activity.isDeleted"
+     [ngClass]="{'activity-card-closed': activity.pr.state==1, 'activity-card-merged': activity.pr.state==2}">
   <div class="row">
     <div class="hidden-xs col-sm-2 col-lg-1 activity-card-thumbnail">
       <a href="{{activity.pr.owner.url}}" target=”_blank”>
@@ -23,6 +25,9 @@
       </div>
     </div>
     <div class="col-xs-2 activity-card-time">
+      <div class="clearfix">
+        <button class="close" (click)="clearActivity()" aria-label="close">&times;</button>
+      </div>
       <p>
         <time title="{{activity.lastActivity.created_at | date : 'MMM dd yyyy HH:mm:ss'}}">{{activity.lastActivity.created_at | amTimeAgo}}</time>
       </p>

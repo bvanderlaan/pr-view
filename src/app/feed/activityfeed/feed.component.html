@@ -5,7 +5,8 @@
   <div *ngFor="let activity of activityFeed">
     <activity-card
       [activity]=activity
-      (onRead)="save()">
+      (onRead)="save()"
+      (onDelete)="save()">
     </activity-card>
   </div>
 </section>

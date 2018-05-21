@@ -77,6 +77,39 @@ describe('ActivityCardComponent', () => {
 
     expect(fixture.nativeElement.querySelector('.activity-card-body').innerText).toEqual('roger opened New\nroger commented New\n');
   });
+
+  it('should be visible if not deleted', () => {
+    const activity = createActivity('12345', 'PullRequestReviewCommentEvent', 'opened');
+    const prActivity = new PRActivity(activity);
+    component.activityCardComponent.activity = prActivity;
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.activity-card')).not.toBeNull();
+  });
+
+  it('should be hidden if deleted', () => {
+    const activity = createActivity('12345', 'PullRequestReviewCommentEvent', 'opened');
+    const prActivity = new PRActivity(activity);
+    prActivity.delete();
+    component.activityCardComponent.activity = prActivity;
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.activity-card')).toBeNull();
+  });
+
+  it('should hidden card when deleted', () => {
+    const activity = createActivity('12345', 'PullRequestReviewCommentEvent', 'opened');
+    const prActivity = new PRActivity(activity);
+    component.activityCardComponent.activity = prActivity;
+    expect(prActivity.isDeleted).toBeFalsy();
+    fixture.detectChanges();
+
+    fixture.nativeElement.querySelector('.close').click();
+    fixture.detectChanges();
+
+    expect(prActivity.isDeleted).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.activity-card')).toBeNull();
+  });
 });
 
 @Component({
