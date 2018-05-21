@@ -17,6 +17,9 @@
       <div class="activity-card-body">
         <div *ngFor="let a of activity.activities">
           <a href="{{a.actor.url}}" target=”_blank”>
+            <img src="{{a.actor.image}}" class="img-fluid img-thumbnail" />
+          </a>
+          <a href="{{a.actor.url}}" target=”_blank”>
             <strong>{{a.actor.name}}</strong>
           </a>
           {{a.action}}

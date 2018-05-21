@@ -75,7 +75,9 @@ describe('ActivityCardComponent', () => {
     component.activityCardComponent.activity = prActivity;
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.activity-card-body').innerText).toEqual('roger opened New\nroger commented New\n');
+    const body = fixture.nativeElement.querySelector('.activity-card-body').innerText;
+    expect(body).toContain('roger opened New');
+    expect(body).toContain('roger commented New');
   });
 
   it('should be visible if not deleted', () => {

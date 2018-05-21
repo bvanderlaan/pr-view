@@ -9,6 +9,11 @@
   margin-left: 10px;
 }
 
+.activity-card-body img {
+  max-width: 32px;
+  padding: 2px;
+}
+
 .activity-card-main .badge {
   background-color: #0069d9;
   border-color: #0062cc;
