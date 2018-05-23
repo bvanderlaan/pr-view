@@ -8,7 +8,7 @@ function getAction(json) {
       action = `commented on pull request`;
       break;
     case 'PullRequestEvent':
-      const a = isClosed(json)
+      const a = json.payload.pull_request.state === 'closed'
         ? json.payload.pull_request.merged
           ? 'merged'
           : 'closed'
@@ -19,10 +19,6 @@ function getAction(json) {
   }
 
   return action;
-}
-
-function isClosed(json) {
-  return (json.payload.action === 'closed');
 }
 
 function createActor(actor, baseURL = undefined) {
@@ -51,7 +47,7 @@ function createPR(json, baseURL = undefined) {
     url: pull_request.html_url,
     body: pull_request.body,
     owner: createActor(pull_request.user, baseURL),
-    state: !isClosed(json)
+    state: pull_request.state !== 'closed'
       ? PRState.Open
       : pull_request.merged ? PRState.Merged : PRState.Closed,
   });

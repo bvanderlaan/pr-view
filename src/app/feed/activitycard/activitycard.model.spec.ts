@@ -63,9 +63,9 @@ describe('ActivityCardModel', () => {
             url: 'https://github.com/api/v3/repos/bvanderlaan/test'
         },
         payload: {
-          action: 'closed',
           pull_request: {
             merged: true,
+            state: 'closed',
             number: '1234',
             title: 'This is a test PullRequest',
             body: 'This is the body of the test PullRequest',
